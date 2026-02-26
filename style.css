@@ -182,16 +182,16 @@ justify-content: space-between;
 
 .case-preview .case-cards {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
-  display: flex;
-flex-direction: column;
-justify-content: space-between;
+  justify-content: center;
+  align-items: stretch;
+  gap: 24px;
 }
 
 .case-preview .card {
-  flex: 1;
-  margin: 1rem;
+  flex: 0 1 300px;
+  max-width: 320px;
+  margin: 0;              /* change this */
   background-color: #ffffff;
   border-radius: 6px;
   overflow: hidden;
@@ -199,13 +199,14 @@ justify-content: space-between;
   text-align: center;
   min-width: 250px;
   display: flex;
-flex-direction: column;
-justify-content: space-between;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .case-preview .card img {
   width: 100%;
-  height: auto;
+  height: 180px;
+  object-fit: cover;
   display: block;
 }
 
