@@ -266,10 +266,14 @@
   </main>
 
   <script>
-    // Replace this at deploy-time when Zapier/Tally endpoint is finalized.
-    // Example: window.MODA_STRATEGY_INTAKE_ENDPOINT = 'https://hooks.zapier.com/hooks/catch/...';
-    const INTAKE_ENDPOINT = window.MODA_STRATEGY_INTAKE_ENDPOINT || '';
+    window.MODA_STRATEGY_INTAKE_ENDPOINT =
+      window.MODA_STRATEGY_INTAKE_ENDPOINT || 'http://localhost:3001/api/webhooks/strategy-intake';
+    if (typeof window.MODA_STRATEGY_INTAKE_WEBHOOK_SECRET === 'undefined') {
+      window.MODA_STRATEGY_INTAKE_WEBHOOK_SECRET = '';
+    }
+  </script>
 
+  <script>
     const stepTitles = {
       1: 'Brand Profile',
       2: 'Business Snapshot',
@@ -335,20 +339,28 @@
     });
 
     async function submitQualification(payload) {
-      if (!INTAKE_ENDPOINT) {
+      const endpoint = String(window.MODA_STRATEGY_INTAKE_ENDPOINT || '').trim();
+      if (!endpoint) {
         throw new Error('Intake endpoint not configured. Set window.MODA_STRATEGY_INTAKE_ENDPOINT.');
       }
 
-      const response = await fetch(INTAKE_ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      });
+      const secret = String(window.MODA_STRATEGY_INTAKE_WEBHOOK_SECRET || '').trim();
+      const headers = { 'Content-Type': 'application/json' };
+      if (secret) headers['x-webhook-secret'] = secret;
+
+      let response;
+      try {
+        response = await fetch(endpoint, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify(payload)
+        });
+      } catch {
+        throw new Error('Submission failed');
+      }
 
       if (!response.ok) {
-        throw new Error(`Submission failed (${response.status}). Please retry.`);
+        throw new Error('Submission failed');
       }
     }
 
