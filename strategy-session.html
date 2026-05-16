@@ -133,6 +133,28 @@
     }
     .btn-dark { background: #18160f; color: #f5f0e8; }
     .btn-light { background: transparent; border: 1px solid #1c1a15; color: #1c1a15; }
+    
+    .field-examples {
+      font-size: 11px;
+      color: #6b655c;
+      margin-top: 8px;
+      line-height: 1.6;
+      display: block;
+    }
+    .field-examples .examples-label {
+      margin: 0 0 4px;
+      font-size: 11px;
+      color: #6b655c;
+    }
+    .field-examples ul {
+      margin: 0;
+      padding: 0 0 0 1rem;
+      list-style: none;
+    }
+    .field-examples li {
+      margin-top: 2px;
+    }
+
     .hint {
       font-size: 0.85rem;
       color: #6f6455;
@@ -209,6 +231,14 @@
           <div class="field">
             <label for="what_business_sells">What does your business sell?</label>
             <textarea id="what_business_sells" name="what_business_sells" required></textarea>
+            <div class="field-examples">
+              <p class="examples-label">Examples:</p>
+              <ul>
+                <li>Who you serve and the problem you solve</li>
+                <li>How you are different from nearby alternatives</li>
+                <li>Your price tier and how people discover you today</li>
+              </ul>
+            </div>
           </div>
           <div class="field">
             <label for="current_business_stage">Current business stage</label>
@@ -224,23 +254,69 @@
 
         <div class="step" data-step="3" hidden>
           <div class="field">
-            <label for="biggest_current_bottleneck">Biggest current bottleneck</label>
+            <label for="biggest_current_bottleneck">What currently feels most difficult inside your business?</label>
             <textarea id="biggest_current_bottleneck" name="biggest_current_bottleneck" required></textarea>
+            <div class="field-examples">
+              <p class="examples-label">Examples:</p>
+              <ul>
+                <li>Finding consistent clients</li>
+                <li>Explaining your value clearly</li>
+                <li>Content consistency</li>
+                <li>Visibility</li>
+                <li>Turning interest into bookings</li>
+                <li>Time or structure</li>
+                <li>Too many priorities</li>
+              </ul>
+            </div>
+
           </div>
           <div class="field">
-            <label for="what_they_want_help_with">What do you want help with?</label>
+            <label for="what_they_want_help_with">What do you want to be different six months from now?</label>
             <textarea id="what_they_want_help_with" name="what_they_want_help_with" required></textarea>
+            <div class="field-examples">
+              <p class="examples-label">Examples:</p>
+              <ul>
+                <li>Clearer positioning and messaging</li>
+                <li>A content rhythm that feels on-brand</li>
+                <li>Visual identity that matches your price</li>
+                <li>A simpler client journey and offers</li>
+                <li>Readiness for launch, retail, or expansion</li>
+              </ul>
+            </div>
+
           </div>
         </div>
 
         <div class="step" data-step="4" hidden>
           <div class="field">
-            <label for="existing_assets_systems">Do you already have assets/systems in place?</label>
+            <label for="existing_assets_systems">What do you already have in place?</label>
             <textarea id="existing_assets_systems" name="existing_assets_systems" required></textarea>
+            <div class="field-examples">
+              <p class="examples-label">Examples:</p>
+              <ul>
+                <li>Photography or visual assets</li>
+                <li>Website, packaging, or brand deck</li>
+                <li>Content library or email list</li>
+                <li>Team or vendor support</li>
+                <li>Still building from scratch</li>
+              </ul>
+            </div>
+
           </div>
           <div class="field">
-            <label for="why_applying_now">Why are you applying now?</label>
+            <label for="why_applying_now">Why now?</label>
             <textarea id="why_applying_now" name="why_applying_now" required></textarea>
+            <div class="field-examples">
+              <p class="examples-label">Examples:</p>
+              <ul>
+                <li>Launch or relaunch timing</li>
+                <li>Price or offer change</li>
+                <li>New channel or retail step</li>
+                <li>Outgrowing current brand presence</li>
+                <li>Ready to invest at the next level</li>
+              </ul>
+            </div>
+
           </div>
           <p class="hint">
             If approved, the next step is booking + payment instructions through the official workflow.
@@ -340,7 +416,7 @@
     async function submitQualification(payload) {
       const endpoint = String(window.MODA_STRATEGY_INTAKE_ENDPOINT || '').trim();
       if (!endpoint) {
-        throw new Error('Intake endpoint not configured. Set window.MODA_STRATEGY_INTAKE_ENDPOINT.');
+        throw new Error('Intake endpoint not configured.');
       }
 
       const secret = String(window.MODA_STRATEGY_INTAKE_WEBHOOK_SECRET || '').trim();
@@ -355,7 +431,7 @@
           body: JSON.stringify(payload)
         });
       } catch {
-        throw new Error('Submission failed');
+        throw new Error('Network error');
       }
 
       if (!response.ok) {
