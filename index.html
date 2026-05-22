@@ -29,30 +29,80 @@ body {
   overflow-x: hidden;
 }
 
-/* P0 — subtle cream grain (3–4%) on light bands only */
-.hero,
-.sec,
-.sec-alt {
+/* P2 — single editorial room chapter (hero only) */
+.chapter {
   position: relative;
+  overflow: hidden;
   isolation: isolate;
 }
-.hero::after,
+.chapter-visual {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.chapter-visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 72% 50%;
+  filter: contrast(0.9) saturate(0.85) brightness(1.03);
+  opacity: 0;
+  animation: chapterVisualIn 2.6s ease forwards;
+}
+.chapter-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.chapter-scrim--hero {
+  background:
+    linear-gradient(90deg, rgba(245,240,232,0.97) 0%, rgba(245,240,232,0.9) 28%, rgba(245,240,232,0.62) 48%, rgba(245,240,232,0.22) 72%, transparent 100%),
+    linear-gradient(180deg, rgba(245,240,232,0.35) 0%, transparent 40%, transparent 78%, rgba(245,240,232,0.2) 100%);
+}
+.chapter-content {
+  position: relative;
+  z-index: 2;
+}
+@keyframes chapterVisualIn {
+  to { opacity: 0.4; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .chapter-visual img {
+    animation:
+      chapterVisualIn 2.6s ease forwards,
+      chapterAmbient 72s ease-in-out infinite alternate;
+  }
+}
+@keyframes chapterAmbient {
+  from { transform: scale(1); }
+  to { transform: scale(1.015); }
+}
+
+/* P0 — subtle cream grain on light bands */
+.hero.chapter::after,
 .sec::after,
 .sec-alt::after {
   content: '';
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
   opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 180px 180px;
 }
-.hero > *,
+.sec,
+.sec-alt {
+  position: relative;
+  isolation: isolate;
+}
 .sec > *,
 .sec-alt > * {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 /* NAV */
@@ -101,19 +151,21 @@ nav {
 }
 .nav-cta:hover { background: #9a7c4a; }
 
-/* HERO — unified left anchor (desktop, tablet, mobile) */
-.hero {
+/* HERO — unified left anchor + P2 atmosphere */
+.hero.chapter {
+  padding: 0;
+  min-height: calc(100vh - 64px);
+  background: #ede7d9;
+}
+.hero.chapter .chapter-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   text-align: left;
+  min-height: calc(100vh - 64px);
   padding: clamp(96px, 14vw, 128px) var(--page-inset) clamp(72px, 10vw, 100px);
   padding-left: max(var(--page-inset), 10vw);
-  min-height: calc(100vh - 64px);
-  background:
-    radial-gradient(ellipse 90% 70% at 50% 0%, rgba(237,231,217,0.9) 0%, transparent 55%),
-    linear-gradient(180deg, #f5f0e8 0%, #f0e8d4 100%);
 }
 .hero-title,
 .hero-sub,
@@ -403,18 +455,43 @@ footer {
     opacity: 1;
     animation: none;
   }
+  .chapter-visual img {
+    opacity: 0.38;
+    animation: none;
+    transform: none;
+  }
 }
 
 /* Tablet — same institution, shared inset */
 @media (min-width: 561px) and (max-width: 1100px) {
   .nav-links { gap: 28px; }
   .hero-title { font-size: clamp(2.4rem, 5vw, 3.4rem); }
+  .chapter-visual img { object-position: 70% 50%; }
+  .chapter-scrim--hero {
+    background:
+      linear-gradient(90deg, rgba(245,240,232,0.96) 0%, rgba(245,240,232,0.88) 32%, rgba(245,240,232,0.55) 52%, rgba(245,240,232,0.18) 74%, transparent 100%),
+      linear-gradient(180deg, rgba(245,240,232,0.3) 0%, transparent 42%);
+  }
 }
 
 @media (max-width: 860px) {
   nav { height: 58px; }
   .nav-links { display: none; }
-  .hero { min-height: auto; padding-left: var(--page-inset); }
+  .hero.chapter,
+  .hero.chapter .chapter-content {
+    min-height: auto;
+  }
+  .hero.chapter .chapter-content {
+    padding-left: var(--page-inset);
+    padding-top: 96px;
+    padding-bottom: 72px;
+  }
+  .chapter-visual img { object-position: 68% 48%; }
+  .chapter-scrim--hero {
+    background:
+      linear-gradient(180deg, rgba(245,240,232,0.94) 0%, rgba(245,240,232,0.78) 45%, rgba(245,240,232,0.35) 100%),
+      linear-gradient(90deg, rgba(245,240,232,0.96) 0%, rgba(245,240,232,0.72) 42%, rgba(245,240,232,0.28) 100%);
+  }
   .hero-title { font-size: clamp(2.15rem, 8.5vw, 2.85rem); }
   .hero-sub { font-size: 1.05rem; line-height: 1.78; }
   .hero-actions { margin-top: 36px; }
@@ -428,6 +505,12 @@ footer {
 @media (max-width: 480px) {
   .h2-dark, .h2-light { font-size: 1.85rem; }
   .editorial-title { font-size: 1.22rem; }
+  .chapter-visual img { object-position: 62% 52%; }
+  .chapter-scrim--hero {
+    background:
+      linear-gradient(180deg, rgba(245,240,232,0.96) 0%, rgba(245,240,232,0.85) 38%, rgba(245,240,232,0.5) 100%),
+      linear-gradient(90deg, rgba(245,240,232,0.98) 0%, rgba(245,240,232,0.8) 55%, rgba(245,240,232,0.35) 100%);
+  }
 }
 
   </style>
@@ -445,19 +528,33 @@ footer {
     <a href="strategy-session.html" class="nav-cta">Apply for Strategy Session</a>
   </nav>
 
-  <section class="hero" id="home">
-    <p class="hero-note">Selective engagements · Strategy Session by application</p>
-    <p class="hero-label">Luxury AI Brand Operating System</p>
-    <h1 class="hero-title">
-      Production is abundant.<br/>
-      Identity is rare.<br/>
-      MODA builds the system that holds both.
-    </h1>
-    <p class="hero-sub">
-      MODA installs one operating layer — brand authority, identity strategy, editorial systems, AI content infrastructure, automation, and client workflows — so production scales without dissolving who you are.
-    </p>
-    <div class="hero-actions">
-      <a href="strategy-session.html" class="btn-dark">Apply for Strategy Session</a>
+  <section class="hero chapter" id="home">
+    <div class="chapter-visual" aria-hidden="true">
+      <img
+        src="assets/moda-chapter-room.jpg"
+        alt=""
+        width="1536"
+        height="1024"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </div>
+    <div class="chapter-scrim chapter-scrim--hero" aria-hidden="true"></div>
+    <div class="chapter-content hero-content">
+      <p class="hero-note">Selective engagements · Strategy Session by application</p>
+      <p class="hero-label">Luxury AI Brand Operating System</p>
+      <h1 class="hero-title">
+        Production is abundant.<br/>
+        Identity is rare.<br/>
+        MODA builds the system that holds both.
+      </h1>
+      <p class="hero-sub">
+        MODA installs one operating layer — brand authority, identity strategy, editorial systems, AI content infrastructure, automation, and client workflows — so production scales without dissolving who you are.
+      </p>
+      <div class="hero-actions">
+        <a href="strategy-session.html" class="btn-dark">Apply for Strategy Session</a>
+      </div>
     </div>
   </section>
 
