@@ -15,10 +15,12 @@
 :root {
   --page-inset: clamp(28px, 5vw, 56px);
   --content-max: 640px;
-  --editorial-gap: clamp(48px, 8vw, 72px);
+  --chamber-max: 520px;
   --ground-cream: #f5f0e8;
   --ground-cream-room: #ede7d9;
+  --ground-cream-gallery: #f3ede4;
   --ground-dark: #18160f;
+  --ground-dark-deep: #14120c;
 }
 
 body {
@@ -32,7 +34,6 @@ body {
   overflow-x: hidden;
 }
 
-/* P2 — single editorial room chapter (hero only) */
 .chapter {
   position: relative;
   overflow: hidden;
@@ -50,7 +51,7 @@ body {
   height: 100%;
   object-fit: cover;
   object-position: 72% 50%;
-  filter: contrast(0.9) saturate(0.85) brightness(1.03);
+  filter: contrast(0.92) saturate(0.88) brightness(1.02);
   opacity: 0;
   animation: chapterVisualIn 2.6s ease forwards;
 }
@@ -62,15 +63,15 @@ body {
 }
 .chapter-scrim--hero {
   background:
-    linear-gradient(90deg, rgba(245,240,232,0.97) 0%, rgba(245,240,232,0.9) 28%, rgba(245,240,232,0.62) 48%, rgba(245,240,232,0.22) 72%, transparent 100%),
-    linear-gradient(180deg, rgba(245,240,232,0.35) 0%, transparent 40%, transparent 78%, rgba(245,240,232,0.2) 100%);
+    linear-gradient(90deg, rgba(245,240,232,0.96) 0%, rgba(245,240,232,0.88) 30%, rgba(245,240,232,0.58) 50%, rgba(245,240,232,0.2) 74%, transparent 100%),
+    linear-gradient(180deg, rgba(245,240,232,0.32) 0%, transparent 42%, transparent 80%, rgba(245,240,232,0.18) 100%);
 }
 .chapter-content {
   position: relative;
   z-index: 2;
 }
 @keyframes chapterVisualIn {
-  to { opacity: 0.4; }
+  to { opacity: 0.48; }
 }
 @media (prefers-reduced-motion: no-preference) {
   .chapter-visual img {
@@ -84,9 +85,8 @@ body {
   to { transform: scale(1.015); }
 }
 
-/* P0 — subtle cream grain on cream editorial bands */
 .hero.chapter::after,
-.ground-cream::after {
+.passage-gallery-solo::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -96,20 +96,56 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 180px 180px;
 }
-.ground-cream {
+
+/* P1.5 — dark corridor passage (connected, not slabs) */
+.passage-dark {
   position: relative;
   isolation: isolate;
+  background:
+    linear-gradient(180deg, var(--ground-dark-deep) 0%, var(--ground-dark) 12%, var(--ground-dark) 88%, var(--ground-dark-deep) 100%);
+  color: #f5f0e8;
 }
-.ground-cream > * {
+.passage-dark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+.passage-dark > section {
+  position: relative;
+  z-index: 1;
+}
+
+.passage-gallery-solo {
+  position: relative;
+  isolation: isolate;
+  background: var(--ground-cream-gallery);
+}
+.passage-gallery-solo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+.passage-gallery-solo > .inner,
+.passage-gallery-solo > .corridor-inner {
   position: relative;
   z-index: 2;
 }
-.ground-dark {
-  background: var(--ground-dark);
-  color: #f5f0e8;
+
+.ground-cream {
+  padding: clamp(96px, 13vw, 132px) var(--page-inset);
+  background: transparent;
 }
 
-/* NAV */
 nav {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -155,7 +191,6 @@ nav {
 }
 .nav-cta:hover { background: #9a7c4a; }
 
-/* HERO — unified left anchor + P2 atmosphere */
 .hero.chapter {
   padding: 0;
   min-height: calc(100vh - 64px);
@@ -210,10 +245,10 @@ nav {
 .hero-title em { font-style: italic; color: #9a7c4a; }
 .hero-sub {
   margin-top: 32px;
-  font-size: 1.15rem;
-  line-height: 1.8;
+  font-size: 1.12rem;
+  line-height: 1.82;
   color: #3d3a32;
-  max-width: 520px;
+  max-width: 480px;
   opacity: 0;
   animation: rise 1s ease 0.5s forwards;
 }
@@ -241,20 +276,6 @@ nav {
   box-shadow: 0 3px 16px rgba(24,22,15,0.15);
 }
 .btn-dark:hover { background: #9a7c4a; }
-.btn-border {
-  display: inline-block;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: #1c1a15;
-  background: transparent;
-  text-decoration: none;
-  padding: 17px 44px;
-  border-radius: 100px;
-  border: 2px solid #1c1a15;
-  transition: background 0.25s, color 0.25s;
-}
-.btn-border:hover { background: #1c1a15; color: #f5f0e8; }
 .btn-gold {
   display: inline-block;
   font-family: 'DM Sans', sans-serif;
@@ -269,46 +290,25 @@ nav {
   box-shadow: 0 3px 16px rgba(154,124,74,0.2);
 }
 .btn-gold:hover { background: #ccaa72; }
-.btn-ghost-light {
-  display: inline-block;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 400;
-  color: #f5f0e8;
-  background: transparent;
-  text-decoration: none;
-  padding: 17px 44px;
-  border-radius: 100px;
-  border: 1.5px solid rgba(245,240,232,0.5);
-  transition: border-color 0.25s, color 0.25s;
-}
-.btn-ghost-light:hover { border-color: #f5f0e8; }
 
-/* SECTIONS — three grounds: cream room (hero), dark corridor, cream editorial */
-.ground-cream {
-  padding: clamp(88px, 12vw, 120px) var(--page-inset);
-  background: var(--ground-cream);
-}
 .inner { max-width: 1080px; margin: 0 auto; }
 .inner-narrow { max-width: var(--content-max); }
-.center { text-align: center; }
 
-/* Dark corridor — Session, quote threshold, Story, Engagement, footer */
-.chapter-corridor {
-  padding: clamp(96px, 14vw, 140px) var(--page-inset);
-  min-height: min(72vh, 720px);
+/* Session — private chamber */
+.session-chamber {
+  padding: clamp(112px, 16vw, 152px) var(--page-inset) clamp(72px, 10vw, 96px);
   display: flex;
   align-items: center;
-  position: relative;
+  min-height: min(52vh, 580px);
 }
-#session.chapter-corridor::before {
+.session-chamber::before {
   content: '';
   position: absolute;
   top: 0;
   left: var(--page-inset);
   right: var(--page-inset);
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(184,150,96,0.28) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(184,150,96,0.32) 50%, transparent 100%);
   pointer-events: none;
 }
 .corridor-inner {
@@ -316,50 +316,40 @@ nav {
   max-width: 1080px;
   margin: 0 auto;
 }
-.corridor-compose {
-  max-width: 560px;
+.chamber-compose {
+  max-width: var(--chamber-max);
 }
-.corridor-threshold {
-  margin-top: clamp(44px, 7vw, 56px);
-  padding-top: clamp(36px, 5vw, 48px);
-  border-top: 1px solid rgba(245,240,232,0.1);
+.chamber-compose .h2-light {
+  margin-top: 0;
 }
-.path-threshold {
+.chamber-compose .lead-light {
+  margin-top: clamp(28px, 4vw, 36px);
+  font-size: 1.05rem;
+  line-height: 1.9;
+  max-width: 28em;
+}
+.session-whisper {
+  margin-top: clamp(36px, 5vw, 44px);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: rgba(245,240,232,0.45);
+}
+
+/* Airlock — merged quote threshold (not second thesis) */
+.chamber-airlock {
+  margin-top: clamp(56px, 8vw, 72px);
+  padding-top: clamp(48px, 7vw, 64px);
+  border-top: 1px solid rgba(245,240,232,0.08);
+}
+.airlock-line {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.55;
+  color: rgba(245,240,232,0.72);
   margin: 0;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(245,240,232,0.42);
-  line-height: 1.6;
-}
-.chapter-quote {
-  padding: clamp(64px, 10vw, 88px) var(--page-inset);
-  min-height: 0;
-}
-.chapter-quote .inner {
-  max-width: 820px;
-}
-.chapter-story {
-  padding: clamp(96px, 12vw, 128px) var(--page-inset);
-  min-height: min(56vh, 560px);
-  display: flex;
-  align-items: center;
-}
-.story-chapter {
-  max-width: var(--content-max);
-}
-.chapter-engagement {
-  padding: clamp(88px, 12vw, 128px) var(--page-inset);
-  text-align: left;
-}
-.chapter-engagement .inner-narrow,
-.chapter-engagement .lead-light,
-.chapter-engagement .h2-light,
-.chapter-engagement .eyebrow-light,
-.chapter-engagement .cta-note {
-  max-width: var(--content-max);
+  max-width: 22em;
 }
 
 .eyebrow {
@@ -384,143 +374,180 @@ nav {
 .h2-dark em { font-style: italic; color: #9a7c4a; }
 .h2-light { font-family: 'Playfair Display', serif; font-weight: 400; font-size: clamp(2rem,3.5vw,3.2rem); line-height: 1.18; color: #f5f0e8; }
 .h2-light em { font-style: italic; color: #b89660; }
-.lead-dark { margin-top: 22px; font-size: 1.1rem; line-height: 1.85; color: #3d3a32; max-width: 580px; }
-.lead-light { margin-top: 22px; font-size: 1.1rem; line-height: 1.85; color: rgba(245,240,232,0.78); max-width: 580px; }
-.center .lead-dark, .center .lead-light { margin-left: auto; margin-right: auto; }
+.lead-dark { margin-top: 22px; font-size: 1.08rem; line-height: 1.88; color: #3d3a32; max-width: 540px; }
 
-/* STORY — authority chapter on dark corridor */
-.story-quote {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(1.5rem, 2.5vw, 2rem);
-  font-style: italic;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #f5f0e8;
-  margin: 0;
-  text-align: left;
+/* Story — proof chamber */
+.chapter-proof {
+  padding: clamp(96px, 14vw, 128px) var(--page-inset);
+  padding-top: clamp(72px, 10vw, 96px);
+}
+.chapter-proof::before {
+  content: '';
+  display: block;
+  width: min(120px, 28vw);
+  height: 1px;
+  background: rgba(184,150,96,0.35);
+  margin-bottom: clamp(48px, 7vw, 64px);
+}
+.proof-chapter {
+  max-width: var(--content-max);
+}
+.proof-retail {
+  display: block;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #b89660;
+  margin-bottom: clamp(28px, 4vw, 36px);
 }
 .story-pull {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+  font-size: clamp(1.65rem, 3vw, 2.55rem);
   font-style: italic;
   font-weight: 400;
-  line-height: 1.45;
+  line-height: 1.38;
   color: #f5f0e8;
-  margin: clamp(28px, 4vw, 40px) 0 clamp(32px, 5vw, 44px);
-  padding-left: clamp(20px, 3vw, 28px);
-  border-left: 2px solid rgba(184,150,96,0.45);
-  max-width: 36em;
+  margin: 0;
+  padding: 0;
+  border: none;
+  max-width: 14em;
 }
 .story-pull strong {
   font-weight: 500;
   color: #f5f0e8;
+  font-style: normal;
+  letter-spacing: 0.01em;
 }
-.story-body p {
-  font-size: 1.02rem;
-  line-height: 1.95;
-  color: rgba(245,240,232,0.78);
-  margin: 0;
+.story-proof-note {
+  margin-top: clamp(40px, 6vw, 52px);
+  font-size: 1rem;
+  line-height: 1.9;
+  color: rgba(245,240,232,0.62);
+  max-width: 32em;
 }
-.story-body p strong { color: #f5f0e8; font-weight: 500; }
 
-/* SESSION */
-.session-meta { margin-top: 28px; font-size: 0.88rem; color: rgba(245,240,232,0.55); letter-spacing: 0.04em; }
+/* Engagement — corridor close */
+.chapter-engagement {
+  padding: clamp(88px, 12vw, 120px) var(--page-inset) clamp(104px, 14vw, 140px);
+  text-align: left;
+}
+.chapter-engagement .inner-narrow,
+.chapter-engagement .lead-light,
+.chapter-engagement .h2-light,
+.chapter-engagement .eyebrow-light,
+.chapter-engagement .cta-note {
+  max-width: var(--chamber-max);
+}
+.lead-light {
+  margin-top: 22px;
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: rgba(245,240,232,0.72);
+  max-width: 28em;
+}
+.engagement-cta {
+  margin-top: clamp(44px, 6vw, 52px);
+}
+.cta-note {
+  margin-top: 28px;
+  font-size: 0.82rem;
+  color: rgba(245,240,232,0.45);
+  letter-spacing: 0.06em;
+}
 
-/* WHAT WE INSTALL — editorial composition (not a list) */
+/* What We Install — gallery editorial beats */
 .install-composition {
-  margin-top: clamp(56px, 9vw, 72px);
+  margin-top: clamp(48px, 8vw, 64px);
+  max-width: var(--content-max);
 }
-.install-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(36px, 5vw, 48px);
+.install-beats {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 4vw, 36px);
 }
-.install-cell {
+.install-beat {
   margin: 0;
   padding: 0;
 }
-.install-title {
+.install-beat-name {
+  display: block;
   font-family: 'Playfair Display', serif;
-  font-size: clamp(1.22rem, 2vw, 1.42rem);
+  font-size: clamp(1.2rem, 2vw, 1.38rem);
   font-weight: 400;
   color: #1c1a15;
-  line-height: 1.25;
-  margin-bottom: 10px;
+  line-height: 1.3;
+  margin-bottom: 6px;
 }
-.install-desc {
-  font-size: 0.98rem;
-  line-height: 1.7;
-  color: #3d3a32;
+.install-beat-note {
+  display: block;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #5c564c;
+  font-weight: 300;
 }
 
-/* INSTALLED SYSTEMS — reference band (not a menu) */
+/* Installed Systems — archival reference */
 .systems-ref-header .h2-dark { margin-bottom: 0; }
 .systems-note {
-  margin-top: 22px;
-  font-size: 1.02rem;
-  color: #3d3a32;
+  margin-top: 20px;
+  font-size: 0.98rem;
+  color: #5c564c;
   font-style: italic;
-  line-height: 1.65;
-  max-width: 560px;
+  line-height: 1.7;
+  max-width: 520px;
+  font-weight: 300;
 }
-.systems-ref-block {
-  max-width: 560px;
+.systems-archive {
+  max-width: 520px;
 }
 .systems-ref {
-  margin-top: clamp(48px, 7vw, 60px);
+  margin-top: clamp(44px, 7vw, 56px);
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: clamp(32px, 5vw, 44px);
 }
 .systems-ref-item {
   margin: 0;
-  padding: clamp(20px, 3vw, 26px) 0;
+  padding: 0;
   border: none;
-  border-bottom: 1px solid rgba(28,26,21,0.08);
-}
-.systems-ref-item:first-child {
-  padding-top: 0;
-}
-.systems-ref-item:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
 }
 .systems-ref-name {
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.78rem;
+  font-size: 0.7rem;
   font-weight: 500;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #6f6455;
+  color: #8a8072;
   line-height: 1.4;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 .systems-ref-line {
   font-family: 'Playfair Display', serif;
-  font-size: 1.05rem;
+  font-size: 1.02rem;
   font-weight: 400;
-  line-height: 1.5;
-  color: #1c1a15;
+  font-style: italic;
+  line-height: 1.55;
+  color: #3d3a32;
 }
 
-.cta-note { margin-top: 28px; font-size: 0.82rem; color: rgba(245,240,232,0.55); letter-spacing: 0.06em; }
-
-/* FOOTER */
 footer {
-  background: var(--ground-dark);
+  background: var(--ground-dark-deep);
   padding: 52px var(--page-inset);
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 20px;
+  color: #f5f0e8;
 }
 .f-logo { font-weight: 500; font-size: 0.82rem; letter-spacing: 0.2em; text-transform: uppercase; color: #f5f0e8; }
 .f-mid { font-size: 0.78rem; color: rgba(245,240,232,0.3); letter-spacing: 0.04em; text-align: center; line-height: 1.8; }
 .f-email a { font-size: 0.85rem; color: #b89660; text-decoration: none; }
 .f-email a:hover { color: #f5f0e8; }
 
-/* REVEAL — section-level calm (fewer nodes, no list cascade) */
 .reveal { opacity: 0; transform: translateY(10px); transition: opacity 1.15s ease, transform 1.15s ease; }
 .reveal.in { opacity: 1; transform: none; }
 
@@ -533,25 +560,24 @@ footer {
     animation: none;
   }
   .chapter-visual img {
-    opacity: 0.38;
+    opacity: 0.44;
     animation: none;
     transform: none;
   }
 }
 
-/* Tablet — same institution, shared inset */
 @media (min-width: 561px) and (max-width: 1100px) {
   .nav-links { gap: 28px; }
   .hero-title { font-size: clamp(2.4rem, 5vw, 3.4rem); }
-  .chapter-corridor { min-height: min(64vh, 640px); }
-  .corridor-compose,
-  .systems-ref-block { max-width: 560px; }
+  .session-chamber { min-height: auto; padding: 100px var(--page-inset) 72px; }
   .chapter-visual img { object-position: 70% 50%; }
   .chapter-scrim--hero {
     background:
-      linear-gradient(90deg, rgba(245,240,232,0.96) 0%, rgba(245,240,232,0.88) 32%, rgba(245,240,232,0.55) 52%, rgba(245,240,232,0.18) 74%, transparent 100%),
-      linear-gradient(180deg, rgba(245,240,232,0.3) 0%, transparent 42%);
+      linear-gradient(90deg, rgba(245,240,232,0.95) 0%, rgba(245,240,232,0.86) 34%, rgba(245,240,232,0.52) 54%, rgba(245,240,232,0.16) 76%, transparent 100%),
+      linear-gradient(180deg, rgba(245,240,232,0.28) 0%, transparent 44%);
   }
+  .systems-archive,
+  .chamber-compose { max-width: 520px; }
 }
 
 @media (max-width: 860px) {
@@ -569,39 +595,43 @@ footer {
   .chapter-visual img { object-position: 68% 48%; }
   .chapter-scrim--hero {
     background:
-      linear-gradient(180deg, rgba(245,240,232,0.94) 0%, rgba(245,240,232,0.78) 45%, rgba(245,240,232,0.35) 100%),
-      linear-gradient(90deg, rgba(245,240,232,0.96) 0%, rgba(245,240,232,0.72) 42%, rgba(245,240,232,0.28) 100%);
+      linear-gradient(180deg, rgba(245,240,232,0.93) 0%, rgba(245,240,232,0.76) 46%, rgba(245,240,232,0.32) 100%),
+      linear-gradient(90deg, rgba(245,240,232,0.95) 0%, rgba(245,240,232,0.7) 44%, rgba(245,240,232,0.24) 100%);
   }
   .hero-title { font-size: clamp(2.15rem, 8.5vw, 2.85rem); }
   .hero-sub { font-size: 1.05rem; line-height: 1.78; }
   .hero-actions { margin-top: 36px; }
-  .btn-dark, .btn-border, .btn-gold, .btn-ghost-light { padding: 15px 32px; font-size: 0.9rem; }
-  /* P0 — softer scroll reveal (script unchanged; less visual stagger noise) */
+  .btn-dark, .btn-gold { padding: 15px 32px; font-size: 0.9rem; }
   .reveal { transform: translateY(8px); transition: opacity 0.85s ease, transform 0.85s ease; }
-  .install-grid { gap: 32px; }
-  .chapter-corridor { min-height: auto; padding: 88px var(--page-inset); }
-  .chapter-story { min-height: auto; padding: 88px var(--page-inset); }
+  .session-chamber { min-height: auto; padding: 88px var(--page-inset) 64px; }
+  .chapter-proof { padding: 80px var(--page-inset); padding-top: 64px; }
+  .chapter-engagement { padding: 80px var(--page-inset) 96px; }
+  .ground-cream { padding: 80px var(--page-inset); }
   footer { flex-direction: column; text-align: left; align-items: flex-start; padding: 44px var(--page-inset); }
   .f-mid { text-align: left; }
+  .story-pull { font-size: clamp(1.5rem, 6.5vw, 2rem); max-width: none; }
 }
+
 @media (min-width: 900px) {
-  .install-grid {
+  .install-beats {
+    display: grid;
     grid-template-columns: 1fr 1fr;
-    column-gap: clamp(56px, 8vw, 96px);
-    row-gap: clamp(44px, 5vw, 56px);
+    column-gap: clamp(48px, 7vw, 80px);
+    row-gap: clamp(32px, 4vw, 40px);
     max-width: 1080px;
   }
   .install-composition { max-width: none; }
 }
+
 @media (max-width: 480px) {
   .h2-dark, .h2-light { font-size: 1.85rem; }
-  .install-title { font-size: 1.15rem; }
   .chapter-visual img { object-position: 62% 52%; }
   .chapter-scrim--hero {
     background:
-      linear-gradient(180deg, rgba(245,240,232,0.96) 0%, rgba(245,240,232,0.85) 38%, rgba(245,240,232,0.5) 100%),
-      linear-gradient(90deg, rgba(245,240,232,0.98) 0%, rgba(245,240,232,0.8) 55%, rgba(245,240,232,0.35) 100%);
+      linear-gradient(180deg, rgba(245,240,232,0.95) 0%, rgba(245,240,232,0.84) 40%, rgba(245,240,232,0.48) 100%),
+      linear-gradient(90deg, rgba(245,240,232,0.97) 0%, rgba(245,240,232,0.78) 55%, rgba(245,240,232,0.3) 100%);
   }
+  .chamber-airlock { margin-top: 48px; padding-top: 40px; }
 }
 
   </style>
@@ -613,8 +643,8 @@ footer {
     <ul class="nav-links">
       <li><a href="#session">Strategy Session</a></li>
       <li><a href="#what">What We Install</a></li>
-      <li><a href="#services">Installed Systems</a></li>
       <li><a href="#story">Our Story</a></li>
+      <li><a href="#services">Installed Systems</a></li>
     </ul>
     <a href="strategy-session.html" class="nav-cta">Apply for Strategy Session</a>
   </nav>
@@ -641,8 +671,7 @@ footer {
         MODA builds the system that holds both.
       </h1>
       <p class="hero-sub">
-        MODA installs one operating layer so production scales without dissolving who you are.<br/>
-        Brand authority, editorial systems, and governed workflows — by application.
+        One operating layer — brand authority, editorial systems, and governed production. By application.
       </p>
       <div class="hero-actions">
         <a href="strategy-session.html" class="btn-dark">Apply for Strategy Session</a>
@@ -650,61 +679,70 @@ footer {
     </div>
   </section>
 
-  <section class="ground-dark chapter-corridor" id="session">
-    <div class="corridor-inner reveal">
-      <div class="corridor-compose">
-        <span class="eyebrow-light">Strategy Session</span>
-        <h2 class="h2-light">Before we build, we need<br/>to understand what you're <em>building.</em></h2>
-        <p class="lead-light">A paid diagnostic — not a consultation. Assessment of position, readiness, and the architecture your brand requires. One recommendation follows. Not a menu.</p>
-        <p class="session-meta">Strategy Session is a paid engagement.</p>
-        <div class="corridor-threshold">
-          <p class="path-threshold">The path · Application · Session · Recommendation</p>
+  <div class="passage-dark">
+    <section class="session-chamber" id="session">
+      <div class="corridor-inner reveal">
+        <div class="chamber-compose">
+          <span class="eyebrow-light">Strategy Session</span>
+          <h2 class="h2-light">Before we build, we need<br/>to understand what you're <em>building.</em></h2>
+          <p class="lead-light">A paid diagnostic. One recommendation follows — not a menu.</p>
+          <p class="session-whisper">Strategy Session is a paid engagement.</p>
+          <div class="chamber-airlock" aria-label="Threshold">
+            <p class="airlock-line">AI made production easy. Identity became rare.</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 
-  <section class="ground-dark chapter-quote section-reveal" aria-label="Worldview">
-    <div class="inner reveal">
-      <blockquote class="story-quote">AI made production easy. Identity became rare. MODA exists to protect the second — with an operating system the first cannot erode.</blockquote>
-    </div>
-  </section>
-
-  <section class="ground-cream section-reveal" id="what">
-    <div class="inner reveal">
-      <div class="inner-narrow">
-        <span class="eyebrow">What We Install</span>
-        <h2 class="h2-dark">One operating layer — not four <em>vendors.</em></h2>
-      </div>
-      <div class="install-composition">
-        <div class="install-grid">
-          <article class="install-cell">
-            <h3 class="install-title">Brand Architecture</h3>
-            <p class="install-desc">Authority, identity, positioning.</p>
-          </article>
-          <article class="install-cell">
-            <h3 class="install-title">Editorial Systems</h3>
-            <p class="install-desc">Voice, narrative, editorial rhythm.</p>
-          </article>
-          <article class="install-cell">
-            <h3 class="install-title">AI Content Infrastructure</h3>
-            <p class="install-desc">Production inside your standards.</p>
-          </article>
-          <article class="install-cell">
-            <h3 class="install-title">Automation &amp; Client Workflows</h3>
-            <p class="install-desc">Intake through governed delivery.</p>
-          </article>
+  <section class="ground-cream section-reveal passage-gallery-solo" id="what">
+      <div class="inner reveal">
+        <div class="inner-narrow">
+          <span class="eyebrow">What We Install</span>
+          <h2 class="h2-dark">One operating layer — not four <em>vendors.</em></h2>
+        </div>
+        <div class="install-composition">
+          <ul class="install-beats">
+            <li class="install-beat">
+              <span class="install-beat-name">Brand Architecture</span>
+              <span class="install-beat-note">Authority, identity, positioning.</span>
+            </li>
+            <li class="install-beat">
+              <span class="install-beat-name">Editorial Systems</span>
+              <span class="install-beat-note">Voice, narrative, rhythm.</span>
+            </li>
+            <li class="install-beat">
+              <span class="install-beat-name">AI Content Infrastructure</span>
+              <span class="install-beat-note">Production inside your standards.</span>
+            </li>
+            <li class="install-beat">
+              <span class="install-beat-name">Automation &amp; Client Workflows</span>
+              <span class="install-beat-note">Intake through governed delivery.</span>
+            </li>
+          </ul>
         </div>
       </div>
-    </div>
   </section>
 
-  <section class="ground-cream section-reveal" id="services">
-    <div class="inner reveal systems-ref-block">
+  <div class="passage-dark">
+    <section class="chapter-proof section-reveal" id="story">
+      <div class="corridor-inner reveal">
+        <div class="proof-chapter">
+          <span class="eyebrow-light">Proof</span>
+          <p class="proof-retail">GUESS · Dillard's · Neiman Marcus</p>
+          <blockquote class="story-pull">A decade inside premium retail operations — <strong>not marketing.</strong></blockquote>
+          <p class="story-proof-note">Categories, revenue, and systems at scale. MODA installs the layer that holds identity when production is easy.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="ground-cream section-reveal passage-gallery-solo" id="services">
+    <div class="inner reveal systems-archive">
       <div class="systems-ref-header">
-        <span class="eyebrow">Installed Systems</span>
+        <span class="eyebrow">On file after Session</span>
         <h2 class="h2-dark">One recommendation.<br/>Three possible <em>depths.</em></h2>
-        <p class="systems-note">If selected to advance, MODA recommends one installed depth after your Strategy Session.</p>
+        <p class="systems-note">Reference only — MODA names one installed depth if you are selected to advance.</p>
       </div>
       <div class="systems-ref">
         <article class="systems-ref-item tier-ref" data-tier-key="essential">
@@ -723,31 +761,21 @@ footer {
     </div>
   </section>
 
-  <section class="ground-dark chapter-story section-reveal" id="story">
-    <div class="corridor-inner reveal">
-      <div class="story-chapter">
-        <span class="eyebrow-light">Our Story</span>
-        <blockquote class="story-pull">A decade inside premium retail operations — <strong>GUESS, Dillard's, and Neiman Marcus</strong> — not marketing.</blockquote>
-        <div class="story-body">
-          <p>The work was categories, revenue, and systems. Most brands produce volume without architecture underneath. MODA installs the operating layer that holds identity when production is easy.</p>
+  <div class="passage-dark">
+    <section class="chapter-engagement section-reveal" id="contact">
+      <div class="inner inner-narrow reveal">
+        <span class="eyebrow-light">Engagement</span>
+        <h2 class="h2-light">When the architecture is right,<br/>production can <em>compound.</em></h2>
+        <p class="lead-light">A selective roster. Revenue-generating, asset-ready, structural.</p>
+        <div class="engagement-cta">
+          <a href="strategy-session.html" class="btn-gold">Apply for Strategy Session</a>
         </div>
+        <p class="cta-note">Selective intake · Paid Strategy Session</p>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 
-  <section class="ground-dark chapter-engagement section-reveal" id="contact">
-    <div class="inner inner-narrow reveal">
-      <span class="eyebrow-light">Engagement</span>
-      <h2 class="h2-light">When the architecture is right,<br/>production can <em>compound.</em></h2>
-      <p class="lead-light">We work with a selective roster of premium clients. Revenue-generating, asset-ready, and serious about building something structural.</p>
-      <div style="margin-top:48px;">
-        <a href="strategy-session.html" class="btn-gold" style="font-size:1rem;padding:18px 52px;">Apply for Strategy Session</a>
-      </div>
-      <p class="cta-note">Selective intake · Premium clients only · Strategy sessions are paid engagements</p>
-    </div>
-  </section>
-
-  <footer class="ground-dark">
+  <footer>
     <div class="f-logo">MODA Studio.AI</div>
     <div class="f-mid">© 2026 MODA STUDIO.AI · All rights reserved<br/>Luxury AI Brand Operating System</div>
     <div class="f-email"><a href="mailto:modastudio.ai@gmail.com">modastudio.ai@gmail.com</a></div>
