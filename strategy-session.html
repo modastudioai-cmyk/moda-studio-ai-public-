@@ -291,9 +291,13 @@
       window.location.hostname === 'localhost' ||
       window.location.hostname === '127.0.0.1';
 
+    // Production: Supabase Edge Function (public-safe). Set full URL in intake-config.js.
+    const STRATEGY_INTAKE_EDGE_PATH = '/functions/v1/strategy-intake-submit';
     const STRATEGY_INTAKE_ENDPOINT = isLocal
       ? 'http://localhost:3001/api/webhooks/strategy-intake'
-      : 'https://moda-studio-app-operator-modastudioai-cmyks-projects.vercel.app/api/webhooks/strategy-intake';
+      : (window.MODA_SUPABASE_FUNCTIONS_ORIGIN
+          ? `${String(window.MODA_SUPABASE_FUNCTIONS_ORIGIN).replace(/\/$/, '')}${STRATEGY_INTAKE_EDGE_PATH}`
+          : '');
 
     window.MODA_STRATEGY_INTAKE_ENDPOINT =
       window.MODA_STRATEGY_INTAKE_ENDPOINT || STRATEGY_INTAKE_ENDPOINT;
