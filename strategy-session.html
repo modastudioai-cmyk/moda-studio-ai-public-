@@ -284,9 +284,19 @@
     </section>
   </main>
 
+  <!-- Optional: intake-config.js sets MODA_STRATEGY_INTAKE_WEBHOOK_SECRET (see intake-config.example.js) -->
+  <script src="intake-config.js"></script>
   <script>
+    const isLocal =
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1';
+
+    const STRATEGY_INTAKE_ENDPOINT = isLocal
+      ? 'http://localhost:3001/api/webhooks/strategy-intake'
+      : 'https://moda-studio-app-operator-modastudioai-cmyks-projects.vercel.app/api/webhooks/strategy-intake';
+
     window.MODA_STRATEGY_INTAKE_ENDPOINT =
-      window.MODA_STRATEGY_INTAKE_ENDPOINT || 'http://localhost:3001/api/webhooks/strategy-intake';
+      window.MODA_STRATEGY_INTAKE_ENDPOINT || STRATEGY_INTAKE_ENDPOINT;
     window.MODA_STRATEGY_INTAKE_WEBHOOK_SECRET =
       window.MODA_STRATEGY_INTAKE_WEBHOOK_SECRET ?? '';
   </script>
