@@ -298,123 +298,41 @@ nav {
 .wcard { padding: 0; }
 .wc-n { font-family: 'Playfair Display', serif; font-size: 1rem; color: #9a7c4a; margin-bottom: 20px; }
 .wc-t { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 400; color: #1c1a15; margin-bottom: 16px; }
-.wc-b { font-size: 1rem; line-height: 1.9; color: #3d3a32; }
-
-/* POSITION */
-.pos-cols {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  margin-top: 64px;
-  align-items: stretch;
-}
-.pcol-light {
-  background: #f5f0e8;
-  padding: 56px 48px;
-}
-.pcol-dark {
-  background: #18160f;
-  padding: 56px 48px;
-}
-.pc-lbl-dark { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: #3d3a32; margin-bottom: 32px; display: block; }
-.pc-lbl-light { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,240,232,0.45); margin-bottom: 32px; display: block; }
-.pc-list { list-style: none; }
-.pc-list-dark li {
-  font-size: 1.05rem;
-  font-weight: 400;
-  color: #1c1a15;
-  padding: 18px 0;
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  line-height: 1.55;
-}
-.pc-list-dark li + li { border-top: 1px solid rgba(213,204,184,0.5); }
-.pc-list-dark li::before { content: '—'; color: #9a7c4a; font-size: 0.75rem; flex-shrink: 0; margin-top: 3px; }
-.pc-list-light li {
-  font-size: 1.05rem;
-  font-weight: 400;
-  color: rgba(245,240,232,0.88);
-  padding: 18px 0;
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  line-height: 1.55;
-}
-.pc-list-light li + li { border-top: 1px solid rgba(255,255,255,0.06); }
-.pc-list-light li::before { content: '✦'; color: #b89660; font-size: 0.6rem; flex-shrink: 0; margin-top: 5px; }
+.wc-b { font-size: 0.98rem; line-height: 1.65; color: #3d3a32; }
 
 /* SESSION */
-.session-covers {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 40px 48px;
-  margin-top: 72px;
-}
-.sc-card { padding: 8px 0; }
-.sc-num { font-family: 'Playfair Display', serif; font-size: 0.9rem; color: #b89660; margin-bottom: 16px; }
-.sc-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 400; color: #f5f0e8; margin-bottom: 12px; }
-.sc-body { font-size: 0.98rem; line-height: 1.8; color: rgba(245,240,232,0.72); }
-.session-actions { margin-top: 40px; display: flex; gap: 16px; flex-wrap: wrap; }
-.session-meta { margin-top: 24px; font-size: 0.85rem; color: rgba(245,240,232,0.5); letter-spacing: 0.04em; }
+.session-meta { margin-top: 28px; font-size: 0.88rem; color: rgba(245,240,232,0.55); letter-spacing: 0.04em; }
 
-/* TIERS */
-.tiers {
+/* BUILD SYSTEMS (reference) */
+.systems-note {
+  margin-top: 28px;
+  font-size: 1rem;
+  color: #3d3a32;
+  font-style: italic;
+  line-height: 1.65;
+  max-width: 520px;
+}
+.center .systems-note { margin-left: auto; margin-right: auto; }
+.tiers-compact {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 56px;
-  width: 100%;
-  margin-top: 64px;
+  gap: 48px;
+  margin-top: 56px;
+  text-align: left;
 }
-.tier {
-  padding: 0 8px 0 0;
-  display: flex;
-  flex-direction: column;
-}
-.tier + .tier { border-left: 1px solid rgba(213,204,184,0.45); padding-left: 48px; }
-.t-num { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.26em; text-transform: uppercase; color: #9a7c4a; margin-bottom: 16px; }
-.t-name { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 400; color: #1c1a15; margin-bottom: 10px; }
-.t-tag { font-size: 0.95rem; color: #3d3a32; margin-bottom: 28px; font-style: italic; line-height: 1.55; }
-.t-rule { height: 1px; background: rgba(213,204,184,0.6); margin-bottom: 28px; }
-.t-list { list-style: none; flex: 1; }
-.t-list li {
-  font-size: 0.97rem;
-  font-weight: 400;
-  color: #3d3a32;
-  padding: 12px 0;
-  display: flex;
-  gap: 12px;
-  line-height: 1.55;
-}
-.t-list li + li { border-top: 1px solid rgba(228,220,202,0.7); }
-.t-list li::before { content: '·'; color: #9a7c4a; flex-shrink: 0; font-size: 1.2rem; line-height: 1.3; }
-.t-btn {
-  display: block;
-  text-align: center;
-  margin-top: 32px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  color: #1c1a15;
-  text-decoration: none;
-  padding: 14px;
-  border: 1px solid rgba(28,26,21,0.25);
-  border-radius: 100px;
-  transition: background 0.25s, color 0.25s, border-color 0.25s;
-}
-.t-btn:hover { border-color: #1c1a15; background: #1c1a15; color: #f5f0e8; }
+.tier-ref + .tier-ref { border-left: 1px solid rgba(213,204,184,0.45); padding-left: 48px; }
+.t-name { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 400; color: #1c1a15; margin-bottom: 12px; }
+.t-tag { font-size: 0.98rem; color: #3d3a32; line-height: 1.6; }
 
 /* PROCESS */
-.proc-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 48px;
-  margin-top: 64px;
+.flow-line {
+  margin-top: 40px;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.25rem, 2vw, 1.65rem);
+  font-weight: 400;
+  color: #1c1a15;
+  letter-spacing: 0.02em;
 }
-.pstep { padding: 0; }
-.ps-n { font-family: 'Playfair Display', serif; font-size: 2.6rem; color: #9a7c4a; opacity: 0.22; line-height: 1; margin-bottom: 28px; }
-.ps-t { font-family: 'Playfair Display', serif; font-size: 1.22rem; font-weight: 400; color: #1c1a15; margin-bottom: 14px; }
-.ps-b { font-size: 1rem; line-height: 1.9; color: #3d3a32; }
 
 .cta-note { margin-top: 28px; font-size: 0.82rem; color: rgba(245,240,232,0.55); letter-spacing: 0.06em; }
 
@@ -465,16 +383,12 @@ footer {
   .hero-actions { margin-top: 36px; gap: 12px; }
   .btn-dark, .btn-border, .btn-gold, .btn-ghost-light { padding: 15px 32px; font-size: 0.9rem; }
   .what-grid { grid-template-columns: 1fr; gap: 48px; }
-  .pos-cols { grid-template-columns: 1fr; gap: 32px; }
-  .session-covers { grid-template-columns: 1fr; gap: 36px; }
-  .tiers { grid-template-columns: 1fr; gap: 56px; }
-  .tier + .tier { border-left: none; padding-left: 0; border-top: 1px solid rgba(213,204,184,0.45); padding-top: 48px; }
-  .proc-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .tiers-compact { grid-template-columns: 1fr; gap: 40px; }
+  .tier-ref + .tier-ref { border-left: none; padding-left: 0; border-top: 1px solid rgba(213,204,184,0.45); padding-top: 40px; }
   footer { flex-direction: column; text-align: center; padding: 44px 28px; }
   .f-email { text-align: center; }
 }
 @media (max-width: 480px) {
-  .proc-grid { grid-template-columns: 1fr; }
   .h2-dark, .h2-light { font-size: 1.85rem; }
 }
 
@@ -485,10 +399,10 @@ footer {
   <nav>
     <a href="index.html" class="nav-logo">MODA Studio.AI</a>
     <ul class="nav-links">
-      <li><a href="#story">Our Story</a></li>
-      <li><a href="#what">What We Do</a></li>
       <li><a href="#session">Strategy Session</a></li>
-      <li><a href="#services">Services</a></li>
+      <li><a href="#what">What We Install</a></li>
+      <li><a href="#services">Build Systems</a></li>
+      <li><a href="#story">Our Story</a></li>
     </ul>
     <a href="strategy-session.html" class="nav-cta">Apply for Strategy Session</a>
   </nav>
@@ -506,15 +420,17 @@ footer {
     </p>
     <div class="hero-actions">
       <a href="strategy-session.html" class="btn-dark">Apply for Strategy Session</a>
-      <a href="#what" class="btn-border">The operating system →</a>
     </div>
-    <p class="hero-line">Founded from a decade inside premium retail operations — for brands that require structure, not more content.</p>
   </section>
 
-  <section class="sec" id="story">
-    <div class="inner story-header reveal">
-      <span class="eyebrow">Our Story</span>
-      <h2 class="h2-dark">Built from the <em>inside out.</em></h2>
+  <section class="sec-dark" id="session">
+    <div class="inner">
+      <div class="reveal">
+        <span class="eyebrow-light">Strategy Session</span>
+        <h2 class="h2-light">Before we build, we need<br/>to understand what you're <em>building.</em></h2>
+        <p class="lead-light">A paid diagnostic — not a consultation. Assessment of position, readiness, and the architecture your brand requires. One recommendation follows. Not a menu.</p>
+        <p class="session-meta">Strategy Session is a paid engagement.</p>
+      </div>
     </div>
   </section>
 
@@ -524,152 +440,57 @@ footer {
     </div>
   </section>
 
-  <section class="sec">
-    <div class="inner story-body-wrap reveal">
-      <div class="story-body">
-        <p>MODA was founded by a corporate buyer with over a decade inside the world's most recognized premium brands — <strong>GUESS, Dillard's, and Neiman Marcus</strong>. Not in marketing. In operations. Managing multimillion-dollar categories. Negotiating globally. Making decisions that directly moved revenue.</p>
-        <p>That experience revealed a consistent truth: <strong>most brands are spending on noise</strong>. Content goes out. Ads run. But underneath, there is no real system. No architecture that compounds.</p>
-        <p>MODA closes that gap — built at the intersection of <strong>brand strategy, cultural intelligence, and AI systems engineering.</strong></p>
-        <span class="story-tag">10+ years inside premium retail</span>
-      </div>
-    </div>
-  </section>
-
   <section class="sec-alt" id="what">
     <div class="inner">
       <div class="reveal">
-        <span class="eyebrow">What We Do</span>
-        <h2 class="h2-dark">Where others build campaigns,<br/>MODA builds <em>infrastructure.</em></h2>
-        <p class="lead-dark">Identity, narrative, content, and automation — designed as one system, not four separate tools.</p>
+        <span class="eyebrow">What We Install</span>
+        <h2 class="h2-dark">One operating layer — not four <em>vendors.</em></h2>
       </div>
       <div class="what-grid reveal">
-        <div class="wcard"><div class="wc-n">01</div><div class="wc-t">Brand Architecture</div><div class="wc-b">The foundational logic of your brand — positioning, voice, identity, and the emotional promise that makes your market choose you.</div></div>
-        <div class="wcard"><div class="wc-n">02</div><div class="wc-t">Editorial Systems</div><div class="wc-b">The story infrastructure that governs how your brand speaks across every channel — consistently, without your constant involvement.</div></div>
-        <div class="wcard"><div class="wc-n">03</div><div class="wc-t">AI Content Infrastructure</div><div class="wc-b">AI integrated into your content workflow so demand generates consistently — without chasing the algorithm or building a content team.</div></div>
-        <div class="wcard"><div class="wc-n">04</div><div class="wc-t">Automation &amp; Client Workflows</div><div class="wc-b">The loops that connect content to conversion — DM flows, email sequences, booking systems — running while you don't.</div></div>
+        <div class="wcard"><div class="wc-n">01</div><div class="wc-t">Brand Architecture</div><div class="wc-b">Authority, identity, positioning.</div></div>
+        <div class="wcard"><div class="wc-n">02</div><div class="wc-t">Editorial Systems</div><div class="wc-b">Voice, narrative, editorial rhythm.</div></div>
+        <div class="wcard"><div class="wc-n">03</div><div class="wc-t">AI Content Infrastructure</div><div class="wc-b">Production inside your standards.</div></div>
+        <div class="wcard"><div class="wc-n">04</div><div class="wc-t">Automation &amp; Client Workflows</div><div class="wc-b">Intake through governed delivery.</div></div>
       </div>
     </div>
   </section>
 
-  <section class="sec-roomy" id="positioning">
-    <div class="inner">
+  <section class="sec" id="services">
+    <div class="inner center">
       <div class="reveal">
-        <span class="eyebrow">Our Position</span>
-        <h2 class="h2-dark">A category of <em>one.</em></h2>
-      </div>
-      <div class="pos-cols reveal">
-        <div class="pcol-light">
-          <span class="pc-lbl-dark">What MODA is not</span>
-          <ul class="pc-list pc-list-dark">
-            <li>A content agency producing volume</li>
-            <li>A social media manager</li>
-            <li>A generic marketing consultant</li>
-            <li>Campaign-based, reactive work</li>
-            <li>Another subscription tool</li>
-          </ul>
-        </div>
-        <div class="pcol-dark">
-          <span class="pc-lbl-light">What MODA is</span>
-          <ul class="pc-list pc-list-light">
-            <li>A Brand Operating System — intelligent infrastructure</li>
-            <li>A Narrative Architecture firm</li>
-            <li>An AI systems integrator</li>
-            <li>Structural, permanent brand design</li>
-            <li>The operating layer beneath your brand</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec-dark" id="session">
-    <div class="inner">
-      <div class="reveal">
-        <span class="eyebrow-light">Strategy Session</span>
-        <h2 class="h2-light">Before we build, we need<br/>to understand what you're <em>building.</em></h2>
-        <p class="lead-light">A paid, one-hour diagnostic. Not a consultation — a clear-eyed assessment of where your brand stands and exactly what it requires to perform at the level you're positioned for.</p>
-        <div class="session-actions">
-          <a href="strategy-session.html" class="btn-gold">Apply for Strategy Session</a>
-          <a href="#services" class="btn-ghost-light">View Build Systems →</a>
-        </div>
-        <p class="session-meta">$500 – $1,000 · Applied in full toward your build · 4 sessions per month</p>
-      </div>
-      <div class="session-covers reveal">
-        <div class="sc-card"><div class="sc-num">01</div><div class="sc-title">Brand Position Audit</div><div class="sc-body">Where you are positioned and what that positioning is costing you.</div></div>
-        <div class="sc-card"><div class="sc-num">02</div><div class="sc-title">Narrative Gap Analysis</div><div class="sc-body">The specific points at which you are losing premium clients.</div></div>
-        <div class="sc-card"><div class="sc-num">03</div><div class="sc-title">System Readiness</div><div class="sc-body">Whether your infrastructure can support a build right now.</div></div>
-        <div class="sc-card"><div class="sc-num">04</div><div class="sc-title">Architecture Recommendation</div><div class="sc-body">One clear tier recommendation with rationale. Not a menu.</div></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec-alt" id="services">
-    <div class="inner">
-      <div class="reveal center">
         <span class="eyebrow">Build Systems</span>
-        <h2 class="h2-dark">Three build systems. One <em>operating architecture.</em></h2>
-        <p class="lead-dark">Each tier represents implementation depth inside the same MODA operating system.</p>
+        <h2 class="h2-dark">Three depths. One <em>architecture.</em></h2>
+        <p class="systems-note">Depth is recommended after your Strategy Session.</p>
       </div>
-      <div class="tiers">
-        <div class="tier" data-tier-key="essential">
-          <div class="t-num">Tier 01</div>
+      <div class="tiers-compact reveal">
+        <div class="tier-ref" data-tier-key="essential">
           <div class="t-name" data-tier-field="name">Identity System</div>
-          <div class="t-tag">Foundational architecture installed before scale.</div>
-          <div class="t-rule"></div>
-          <ul class="t-list">
-            <li>Brand authority framework and positioning logic</li>
-            <li>Audience identity map and premium decision triggers</li>
-            <li>Voice system and narrative command structure</li>
-            <li>Messaging architecture for consistent channel output</li>
-            <li>Content direction blueprint for execution clarity</li>
-          </ul>
-          <a href="strategy-session.html?tier=essential" class="t-btn">Apply for Identity System</a>
+          <p class="t-tag">Foundational authority and identity</p>
         </div>
-
-        <div class="tier" data-tier-key="growth">
-          <div class="t-num">Tier 02</div>
+        <div class="tier-ref" data-tier-key="growth">
           <div class="t-name" data-tier-field="name">Brand Engine</div>
-          <div class="t-tag">Demand architecture connecting narrative to conversion.</div>
-          <div class="t-rule"></div>
-          <ul class="t-list">
-            <li>Everything in Identity System</li>
-            <li>AI content engine configured for repeatable production</li>
-            <li>Offer-to-content framework and conversion message matrix</li>
-            <li>Lead capture and inbound DM automation flows</li>
-            <li>Sales asset system for proof, trust, and qualification</li>
-          </ul>
-          <a href="strategy-session.html?tier=growth" class="t-btn">Apply for Brand Engine</a>
+          <p class="t-tag">Editorial systems and AI infrastructure</p>
         </div>
-
-        <div class="tier" data-tier-key="signature">
-          <div class="t-num">Tier 03</div>
+        <div class="tier-ref" data-tier-key="signature">
           <div class="t-name" data-tier-field="name">Full Operating System</div>
-          <div class="t-tag">Installed infrastructure across brand, content, and revenue operations.</div>
-          <div class="t-rule"></div>
-          <ul class="t-list">
-            <li>Everything in Brand Engine</li>
-            <li>End-to-end operating architecture and orchestration layer</li>
-            <li>Connected automation across content, CRM, and email</li>
-            <li>Governance model for quality and AI-assisted scale</li>
-            <li>Operator handoff protocols and governed client workflows</li>
-          </ul>
-          <a href="strategy-session.html?tier=signature" class="t-btn">Apply for Full Operating System</a>
+          <p class="t-tag">Complete client workflows and governance</p>
         </div>
       </div>
     </div>
   </section>
 
   <section class="sec" id="process">
-    <div class="inner">
-      <div class="reveal center">
-        <span class="eyebrow">How It Works</span>
-        <h2 class="h2-dark">A process built for <em>precision.</em></h2>
-      </div>
-      <div class="proc-grid reveal">
-        <div class="pstep"><div class="ps-n">01</div><div class="ps-t">Discovery &amp; Inquiry</div><div class="ps-b">MODA does not pursue — it attracts. First contact triggers an inquiry, not a pitch.</div></div>
-        <div class="pstep"><div class="ps-n">02</div><div class="ps-t">Intake &amp; Qualification</div><div class="ps-b">A structured intake evaluates business stage, asset readiness, and strategic alignment.</div></div>
-        <div class="pstep"><div class="ps-n">03</div><div class="ps-t">Strategy Session</div><div class="ps-b">The first paid touchpoint. Current position, desired position, and the architecture to close the gap.</div></div>
-        <div class="pstep"><div class="ps-n">04</div><div class="ps-t">Build &amp; Activation</div><div class="ps-b">Phased and milestone-driven. No phase advances without client approval.</div></div>
+    <div class="inner center reveal">
+      <span class="eyebrow">How It Works</span>
+      <p class="flow-line">Apply → Strategy Session → Recommendation</p>
+    </div>
+  </section>
+
+  <section class="sec" id="story">
+    <div class="inner story-body-wrap reveal">
+      <span class="eyebrow">Our Story</span>
+      <div class="story-body">
+        <p>MODA was founded from a decade inside premium retail operations — <strong>GUESS, Dillard's, and Neiman Marcus</strong> — not marketing. The work was categories, revenue, and systems. Most brands produce volume without architecture underneath. MODA installs the operating layer that holds identity when production is easy.</p>
       </div>
     </div>
   </section>
