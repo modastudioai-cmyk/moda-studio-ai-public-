@@ -12,6 +12,12 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
+:root {
+  --page-inset: clamp(28px, 5vw, 56px);
+  --content-max: 640px;
+  --editorial-gap: clamp(48px, 8vw, 72px);
+}
+
 body {
   background: #f5f0e8;
   color: #1c1a15;
@@ -23,6 +29,32 @@ body {
   overflow-x: hidden;
 }
 
+/* P0 — subtle cream grain (3–4%) on light bands only */
+.hero,
+.sec,
+.sec-alt {
+  position: relative;
+  isolation: isolate;
+}
+.hero::after,
+.sec::after,
+.sec-alt::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+.hero > *,
+.sec > *,
+.sec-alt > * {
+  position: relative;
+  z-index: 1;
+}
+
 /* NAV */
 nav {
   position: fixed;
@@ -31,7 +63,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 56px;
+  padding: 0 var(--page-inset);
   height: 64px;
   background: rgba(245,240,232,0.92);
   backdrop-filter: blur(16px);
@@ -69,19 +101,26 @@ nav {
 }
 .nav-cta:hover { background: #9a7c4a; }
 
-/* HERO */
+/* HERO — unified left anchor (desktop, tablet, mobile) */
 .hero {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 128px 56px 100px;
+  align-items: flex-start;
+  text-align: left;
+  padding: clamp(96px, 14vw, 128px) var(--page-inset) clamp(72px, 10vw, 100px);
+  padding-left: max(var(--page-inset), 10vw);
   min-height: calc(100vh - 64px);
   background:
     radial-gradient(ellipse 90% 70% at 50% 0%, rgba(237,231,217,0.9) 0%, transparent 55%),
     linear-gradient(180deg, #f5f0e8 0%, #f0e8d4 100%);
 }
+.hero-title,
+.hero-sub,
+.hero-actions {
+  max-width: var(--content-max);
+}
+.hero-title { max-width: 900px; }
 .hero-note {
   font-size: 0.72rem;
   font-weight: 500;
@@ -127,21 +166,9 @@ nav {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   opacity: 0;
   animation: rise 1s ease 0.65s forwards;
-}
-.hero-line {
-  margin-top: 72px;
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
-  font-weight: 400;
-  font-style: italic;
-  color: #3d3a32;
-  max-width: 640px;
-  line-height: 1.6;
-  opacity: 0;
-  animation: rise 1s ease 0.8s forwards;
 }
 
 .btn-dark {
@@ -201,39 +228,43 @@ nav {
 }
 .btn-ghost-light:hover { border-color: #f5f0e8; }
 
-/* SECTIONS — varied rhythm */
+/* SECTIONS — varied rhythm, shared inset */
 .sec {
-  padding: 112px 56px;
+  padding: clamp(88px, 12vw, 112px) var(--page-inset);
   background: #f5f0e8;
 }
 .sec-alt {
-  padding: 140px 56px;
+  padding: clamp(100px, 14vw, 140px) var(--page-inset);
   background:
     linear-gradient(180deg, #ede7d9 0%, #f0e8d4 50%, #ede7d9 100%);
 }
 .sec-dark {
-  padding: 132px 56px;
+  padding: clamp(88px, 12vw, 132px) var(--page-inset);
   background:
     radial-gradient(ellipse 80% 50% at 50% 100%, rgba(184,150,96,0.08) 0%, transparent 60%),
     #18160f;
 }
 .sec-band-dark {
-  padding: 100px 56px;
+  padding: clamp(80px, 11vw, 100px) var(--page-inset);
   background: #18160f;
 }
-.sec-roomy {
-  padding: 152px 56px;
-  background: #ede7d9;
-}
 .sec-cta-dark {
-  padding: 128px 56px;
-  text-align: center;
+  padding: clamp(88px, 12vw, 128px) var(--page-inset);
+  text-align: left;
   background:
     radial-gradient(ellipse 70% 60% at 50% 0%, rgba(184,150,96,0.12) 0%, transparent 55%),
     #18160f;
 }
 .inner { max-width: 1080px; margin: 0 auto; }
+.inner-narrow { max-width: var(--content-max); }
 .center { text-align: center; }
+.sec-cta-dark .inner-narrow,
+.sec-cta-dark .lead-light,
+.sec-cta-dark .h2-light,
+.sec-cta-dark .eyebrow-light,
+.sec-cta-dark .cta-note {
+  max-width: var(--content-max);
+}
 
 .eyebrow {
   display: block;
@@ -288,17 +319,34 @@ nav {
   color: #9a7c4a;
 }
 
-/* WHAT */
-.what-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 56px 72px;
-  margin-top: 64px;
+/* P1 — vertical editorial bands (no numbers, borders, cards) */
+.editorial-stack {
+  margin-top: clamp(56px, 9vw, 72px);
+  max-width: var(--content-max);
+  display: flex;
+  flex-direction: column;
+  gap: var(--editorial-gap);
 }
-.wcard { padding: 0; }
-.wc-n { font-family: 'Playfair Display', serif; font-size: 1rem; color: #9a7c4a; margin-bottom: 20px; }
-.wc-t { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 400; color: #1c1a15; margin-bottom: 16px; }
-.wc-b { font-size: 0.98rem; line-height: 1.65; color: #3d3a32; }
+.editorial-item {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+}
+.editorial-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.28rem, 2.2vw, 1.5rem);
+  font-weight: 400;
+  color: #1c1a15;
+  line-height: 1.25;
+  margin-bottom: 14px;
+}
+.editorial-desc {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #3d3a32;
+  max-width: 36em;
+}
 
 /* SESSION */
 .session-meta { margin-top: 28px; font-size: 0.88rem; color: rgba(245,240,232,0.55); letter-spacing: 0.04em; }
@@ -310,19 +358,11 @@ nav {
   color: #3d3a32;
   font-style: italic;
   line-height: 1.65;
-  max-width: 520px;
+  max-width: var(--content-max);
 }
-.center .systems-note { margin-left: auto; margin-right: auto; }
-.tiers-compact {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 48px;
-  margin-top: 56px;
-  text-align: left;
+.systems-stack {
+  margin-top: clamp(48px, 8vw, 64px);
 }
-.tier-ref + .tier-ref { border-left: 1px solid rgba(213,204,184,0.45); padding-left: 48px; }
-.t-name { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 400; color: #1c1a15; margin-bottom: 12px; }
-.t-tag { font-size: 0.98rem; color: #3d3a32; line-height: 1.6; }
 
 /* PROCESS */
 .flow-line {
@@ -339,7 +379,7 @@ nav {
 /* FOOTER */
 footer {
   background: #18160f;
-  padding: 52px 56px;
+  padding: 52px var(--page-inset);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -357,39 +397,37 @@ footer {
 
 @keyframes rise { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
 
-@media (min-width: 901px) {
-  .hero {
-    align-items: flex-start;
-    text-align: left;
-    padding-left: max(56px, 10vw);
-    padding-right: 56px;
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .hero-note, .hero-label, .hero-title, .hero-sub, .hero-actions {
+    opacity: 1;
+    animation: none;
   }
-  .hero-actions { justify-content: flex-start; }
-  .hero-line { text-align: left; }
+}
+
+/* Tablet — same institution, shared inset */
+@media (min-width: 561px) and (max-width: 1100px) {
+  .nav-links { gap: 28px; }
+  .hero-title { font-size: clamp(2.4rem, 5vw, 3.4rem); }
 }
 
 @media (max-width: 860px) {
-  nav { padding: 0 24px; height: 58px; }
+  nav { height: 58px; }
   .nav-links { display: none; }
-  .sec { padding: 88px 28px; }
-  .sec-alt { padding: 100px 28px; }
-  .sec-dark, .sec-band-dark, .sec-cta-dark { padding: 88px 28px; }
-  .sec-roomy { padding: 100px 28px; }
-  .hero { padding: 96px 28px 72px; min-height: auto; align-items: center; text-align: center; }
-  .hero-actions { justify-content: center; }
-  .hero-line { text-align: center; margin-top: 56px; }
-  .hero-title { font-size: clamp(2.2rem,9vw,3rem); }
-  .hero-sub { font-size: 1.05rem; }
-  .hero-actions { margin-top: 36px; gap: 12px; }
+  .hero { min-height: auto; padding-left: var(--page-inset); }
+  .hero-title { font-size: clamp(2.15rem, 8.5vw, 2.85rem); }
+  .hero-sub { font-size: 1.05rem; line-height: 1.78; }
+  .hero-actions { margin-top: 36px; }
   .btn-dark, .btn-border, .btn-gold, .btn-ghost-light { padding: 15px 32px; font-size: 0.9rem; }
-  .what-grid { grid-template-columns: 1fr; gap: 48px; }
-  .tiers-compact { grid-template-columns: 1fr; gap: 40px; }
-  .tier-ref + .tier-ref { border-left: none; padding-left: 0; border-top: 1px solid rgba(213,204,184,0.45); padding-top: 40px; }
-  footer { flex-direction: column; text-align: center; padding: 44px 28px; }
-  .f-email { text-align: center; }
+  /* P0 — softer scroll reveal (script unchanged; less visual stagger noise) */
+  .reveal { transform: translateY(8px); transition: opacity 0.85s ease, transform 0.85s ease; }
+  .editorial-stack { gap: 44px; }
+  footer { flex-direction: column; text-align: left; align-items: flex-start; padding: 44px var(--page-inset); }
+  .f-mid { text-align: left; }
 }
 @media (max-width: 480px) {
   .h2-dark, .h2-light { font-size: 1.85rem; }
+  .editorial-title { font-size: 1.22rem; }
 }
 
   </style>
@@ -424,7 +462,7 @@ footer {
   </section>
 
   <section class="sec-dark" id="session">
-    <div class="inner">
+    <div class="inner inner-narrow">
       <div class="reveal">
         <span class="eyebrow-light">Strategy Session</span>
         <h2 class="h2-light">Before we build, we need<br/>to understand what you're <em>building.</em></h2>
@@ -442,45 +480,57 @@ footer {
 
   <section class="sec-alt" id="what">
     <div class="inner">
-      <div class="reveal">
+      <div class="reveal inner-narrow">
         <span class="eyebrow">What We Install</span>
         <h2 class="h2-dark">One operating layer — not four <em>vendors.</em></h2>
       </div>
-      <div class="what-grid reveal">
-        <div class="wcard"><div class="wc-n">01</div><div class="wc-t">Brand Architecture</div><div class="wc-b">Authority, identity, positioning.</div></div>
-        <div class="wcard"><div class="wc-n">02</div><div class="wc-t">Editorial Systems</div><div class="wc-b">Voice, narrative, editorial rhythm.</div></div>
-        <div class="wcard"><div class="wc-n">03</div><div class="wc-t">AI Content Infrastructure</div><div class="wc-b">Production inside your standards.</div></div>
-        <div class="wcard"><div class="wc-n">04</div><div class="wc-t">Automation &amp; Client Workflows</div><div class="wc-b">Intake through governed delivery.</div></div>
+      <div class="editorial-stack reveal">
+        <article class="editorial-item">
+          <h3 class="editorial-title">Brand Architecture</h3>
+          <p class="editorial-desc">Authority, identity, positioning.</p>
+        </article>
+        <article class="editorial-item">
+          <h3 class="editorial-title">Editorial Systems</h3>
+          <p class="editorial-desc">Voice, narrative, editorial rhythm.</p>
+        </article>
+        <article class="editorial-item">
+          <h3 class="editorial-title">AI Content Infrastructure</h3>
+          <p class="editorial-desc">Production inside your standards.</p>
+        </article>
+        <article class="editorial-item">
+          <h3 class="editorial-title">Automation &amp; Client Workflows</h3>
+          <p class="editorial-desc">Intake through governed delivery.</p>
+        </article>
       </div>
     </div>
   </section>
 
   <section class="sec" id="services">
-    <div class="inner center">
-      <div class="reveal">
+    <div class="inner">
+      <div class="reveal inner-narrow">
         <span class="eyebrow">Build Systems</span>
         <h2 class="h2-dark">Three depths. One <em>architecture.</em></h2>
         <p class="systems-note">Depth is recommended after your Strategy Session.</p>
       </div>
-      <div class="tiers-compact reveal">
-        <div class="tier-ref" data-tier-key="essential">
-          <div class="t-name" data-tier-field="name">Identity System</div>
-          <p class="t-tag">Foundational authority and identity</p>
-        </div>
-        <div class="tier-ref" data-tier-key="growth">
-          <div class="t-name" data-tier-field="name">Brand Engine</div>
-          <p class="t-tag">Editorial systems and AI infrastructure</p>
-        </div>
-        <div class="tier-ref" data-tier-key="signature">
-          <div class="t-name" data-tier-field="name">Full Operating System</div>
-          <p class="t-tag">Complete client workflows and governance</p>
-        </div>
+      <div class="editorial-stack systems-stack reveal">
+        <article class="editorial-item tier-ref" data-tier-key="essential">
+          <h3 class="editorial-title" data-tier-field="name">Identity System</h3>
+          <p class="editorial-desc">Foundational authority and identity</p>
+        </article>
+        <article class="editorial-item tier-ref" data-tier-key="growth">
+          <h3 class="editorial-title" data-tier-field="name">Brand Engine</h3>
+          <p class="editorial-desc">Editorial systems and AI infrastructure</p>
+        </article>
+        <article class="editorial-item tier-ref" data-tier-key="signature">
+          <h3 class="editorial-title" data-tier-field="name">Full Operating System</h3>
+          <p class="editorial-desc">Complete client workflows and governance</p>
+        </article>
       </div>
     </div>
   </section>
 
   <section class="sec" id="process">
-    <div class="inner center reveal">
+    <div class="inner inner-narrow reveal">
       <span class="eyebrow">How It Works</span>
       <p class="flow-line">Apply → Strategy Session → Recommendation</p>
     </div>
@@ -496,7 +546,7 @@ footer {
   </section>
 
   <section class="sec-cta-dark" id="contact">
-    <div class="inner center">
+    <div class="inner inner-narrow">
       <span class="eyebrow-light reveal">Engagement</span>
       <h2 class="h2-light reveal">When the architecture is right,<br/>production can <em>compound.</em></h2>
       <p class="lead-light reveal">We work with a selective roster of premium clients. Revenue-generating, asset-ready, and serious about building something structural.</p>
