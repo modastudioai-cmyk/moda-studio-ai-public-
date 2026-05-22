@@ -299,6 +299,17 @@ nav {
   min-height: min(72vh, 720px);
   display: flex;
   align-items: center;
+  position: relative;
+}
+#session.chapter-corridor::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: var(--page-inset);
+  right: var(--page-inset);
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(184,150,96,0.28) 50%, transparent 100%);
+  pointer-events: none;
 }
 .corridor-inner {
   width: 100%;
@@ -306,12 +317,22 @@ nav {
   margin: 0 auto;
 }
 .corridor-compose {
-  max-width: var(--content-max);
+  max-width: 560px;
 }
 .corridor-threshold {
-  margin-top: clamp(48px, 8vw, 64px);
-  padding-top: clamp(40px, 6vw, 52px);
-  border-top: 1px solid rgba(245,240,232,0.12);
+  margin-top: clamp(44px, 7vw, 56px);
+  padding-top: clamp(36px, 5vw, 48px);
+  border-top: 1px solid rgba(245,240,232,0.1);
+}
+.path-threshold {
+  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.42);
+  line-height: 1.6;
 }
 .chapter-quote {
   padding: clamp(64px, 10vw, 88px) var(--page-inset);
@@ -404,14 +425,6 @@ nav {
 
 /* SESSION */
 .session-meta { margin-top: 28px; font-size: 0.88rem; color: rgba(245,240,232,0.55); letter-spacing: 0.04em; }
-.flow-line {
-  margin: 0;
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(1.1rem, 1.8vw, 1.45rem);
-  font-weight: 400;
-  letter-spacing: 0.04em;
-}
-.flow-line--light { color: rgba(245,240,232,0.72); }
 
 /* WHAT WE INSTALL — editorial composition (not a list) */
 .install-composition {
@@ -440,7 +453,7 @@ nav {
   color: #3d3a32;
 }
 
-/* BUILD SYSTEMS — reference band (not a menu) */
+/* INSTALLED SYSTEMS — reference band (not a menu) */
 .systems-ref-header .h2-dark { margin-bottom: 0; }
 .systems-note {
   margin-top: 22px;
@@ -448,31 +461,46 @@ nav {
   color: #3d3a32;
   font-style: italic;
   line-height: 1.65;
-  max-width: var(--content-max);
+  max-width: 560px;
+}
+.systems-ref-block {
+  max-width: 560px;
 }
 .systems-ref {
-  margin-top: clamp(40px, 6vw, 52px);
-  max-width: var(--content-max);
+  margin-top: clamp(48px, 7vw, 60px);
   display: flex;
   flex-direction: column;
-  gap: clamp(22px, 3.5vw, 28px);
+  gap: 0;
 }
 .systems-ref-item {
   margin: 0;
-  padding: 0;
+  padding: clamp(20px, 3vw, 26px) 0;
+  border: none;
+  border-bottom: 1px solid rgba(28,26,21,0.08);
+}
+.systems-ref-item:first-child {
+  padding-top: 0;
+}
+.systems-ref-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
 }
 .systems-ref-name {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.08rem;
-  font-weight: 400;
-  color: #1c1a15;
-  line-height: 1.3;
-  margin-bottom: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6f6455;
+  line-height: 1.4;
+  margin-bottom: 8px;
 }
 .systems-ref-line {
-  font-size: 0.92rem;
-  line-height: 1.65;
-  color: #3d3a32;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #1c1a15;
 }
 
 .cta-note { margin-top: 28px; font-size: 0.82rem; color: rgba(245,240,232,0.55); letter-spacing: 0.06em; }
@@ -492,8 +520,8 @@ footer {
 .f-email a { font-size: 0.85rem; color: #b89660; text-decoration: none; }
 .f-email a:hover { color: #f5f0e8; }
 
-/* REVEAL */
-.reveal { opacity: 0; transform: translateY(14px); transition: opacity 1s ease, transform 1s ease; }
+/* REVEAL — section-level calm (fewer nodes, no list cascade) */
+.reveal { opacity: 0; transform: translateY(10px); transition: opacity 1.15s ease, transform 1.15s ease; }
 .reveal.in { opacity: 1; transform: none; }
 
 @keyframes rise { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
@@ -516,6 +544,8 @@ footer {
   .nav-links { gap: 28px; }
   .hero-title { font-size: clamp(2.4rem, 5vw, 3.4rem); }
   .chapter-corridor { min-height: min(64vh, 640px); }
+  .corridor-compose,
+  .systems-ref-block { max-width: 560px; }
   .chapter-visual img { object-position: 70% 50%; }
   .chapter-scrim--hero {
     background:
@@ -583,7 +613,7 @@ footer {
     <ul class="nav-links">
       <li><a href="#session">Strategy Session</a></li>
       <li><a href="#what">What We Install</a></li>
-      <li><a href="#services">Build Systems</a></li>
+      <li><a href="#services">Installed Systems</a></li>
       <li><a href="#story">Our Story</a></li>
     </ul>
     <a href="strategy-session.html" class="nav-cta">Apply for Strategy Session</a>
@@ -611,7 +641,8 @@ footer {
         MODA builds the system that holds both.
       </h1>
       <p class="hero-sub">
-        MODA installs one operating layer — brand authority, identity strategy, editorial systems, AI content infrastructure, automation, and client workflows — so production scales without dissolving who you are.
+        MODA installs one operating layer so production scales without dissolving who you are.<br/>
+        Brand authority, editorial systems, and governed workflows — by application.
       </p>
       <div class="hero-actions">
         <a href="strategy-session.html" class="btn-dark">Apply for Strategy Session</a>
@@ -620,32 +651,32 @@ footer {
   </section>
 
   <section class="ground-dark chapter-corridor" id="session">
-    <div class="corridor-inner">
-      <div class="corridor-compose reveal">
+    <div class="corridor-inner reveal">
+      <div class="corridor-compose">
         <span class="eyebrow-light">Strategy Session</span>
         <h2 class="h2-light">Before we build, we need<br/>to understand what you're <em>building.</em></h2>
         <p class="lead-light">A paid diagnostic — not a consultation. Assessment of position, readiness, and the architecture your brand requires. One recommendation follows. Not a menu.</p>
         <p class="session-meta">Strategy Session is a paid engagement.</p>
         <div class="corridor-threshold">
-          <p class="flow-line flow-line--light">Apply → Strategy Session → Recommendation</p>
+          <p class="path-threshold">The path · Application · Session · Recommendation</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="ground-dark chapter-quote" aria-label="Worldview">
+  <section class="ground-dark chapter-quote section-reveal" aria-label="Worldview">
     <div class="inner reveal">
       <blockquote class="story-quote">AI made production easy. Identity became rare. MODA exists to protect the second — with an operating system the first cannot erode.</blockquote>
     </div>
   </section>
 
-  <section class="ground-cream" id="what">
-    <div class="inner">
-      <div class="reveal inner-narrow">
+  <section class="ground-cream section-reveal" id="what">
+    <div class="inner reveal">
+      <div class="inner-narrow">
         <span class="eyebrow">What We Install</span>
         <h2 class="h2-dark">One operating layer — not four <em>vendors.</em></h2>
       </div>
-      <div class="install-composition reveal">
+      <div class="install-composition">
         <div class="install-grid">
           <article class="install-cell">
             <h3 class="install-title">Brand Architecture</h3>
@@ -668,33 +699,33 @@ footer {
     </div>
   </section>
 
-  <section class="ground-cream" id="services">
-    <div class="inner">
-      <div class="reveal inner-narrow systems-ref-header">
-        <span class="eyebrow">Build Systems</span>
-        <h2 class="h2-dark">Depths of <em>install.</em></h2>
-        <p class="systems-note">Depth is recommended after your Strategy Session.</p>
+  <section class="ground-cream section-reveal" id="services">
+    <div class="inner reveal systems-ref-block">
+      <div class="systems-ref-header">
+        <span class="eyebrow">Installed Systems</span>
+        <h2 class="h2-dark">One recommendation.<br/>Three possible <em>depths.</em></h2>
+        <p class="systems-note">If selected to advance, MODA recommends one installed depth after your Strategy Session.</p>
       </div>
-      <div class="systems-ref reveal">
+      <div class="systems-ref">
         <article class="systems-ref-item tier-ref" data-tier-key="essential">
-          <h3 class="systems-ref-name" data-tier-field="name">Identity System</h3>
+          <p class="systems-ref-name" data-tier-field="name">Identity System</p>
           <p class="systems-ref-line">Foundational authority and identity.</p>
         </article>
         <article class="systems-ref-item tier-ref" data-tier-key="growth">
-          <h3 class="systems-ref-name" data-tier-field="name">Brand Engine</h3>
+          <p class="systems-ref-name" data-tier-field="name">Brand Engine</p>
           <p class="systems-ref-line">Editorial systems and AI infrastructure.</p>
         </article>
         <article class="systems-ref-item tier-ref" data-tier-key="signature">
-          <h3 class="systems-ref-name" data-tier-field="name">Full Operating System</h3>
+          <p class="systems-ref-name" data-tier-field="name">Full Operating System</p>
           <p class="systems-ref-line">Complete client workflows and governance.</p>
         </article>
       </div>
     </div>
   </section>
 
-  <section class="ground-dark chapter-story" id="story">
-    <div class="corridor-inner">
-      <div class="story-chapter reveal">
+  <section class="ground-dark chapter-story section-reveal" id="story">
+    <div class="corridor-inner reveal">
+      <div class="story-chapter">
         <span class="eyebrow-light">Our Story</span>
         <blockquote class="story-pull">A decade inside premium retail operations — <strong>GUESS, Dillard's, and Neiman Marcus</strong> — not marketing.</blockquote>
         <div class="story-body">
@@ -704,15 +735,15 @@ footer {
     </div>
   </section>
 
-  <section class="ground-dark chapter-engagement" id="contact">
-    <div class="inner inner-narrow">
-      <span class="eyebrow-light reveal">Engagement</span>
-      <h2 class="h2-light reveal">When the architecture is right,<br/>production can <em>compound.</em></h2>
-      <p class="lead-light reveal">We work with a selective roster of premium clients. Revenue-generating, asset-ready, and serious about building something structural.</p>
-      <div class="reveal" style="margin-top:48px;">
+  <section class="ground-dark chapter-engagement section-reveal" id="contact">
+    <div class="inner inner-narrow reveal">
+      <span class="eyebrow-light">Engagement</span>
+      <h2 class="h2-light">When the architecture is right,<br/>production can <em>compound.</em></h2>
+      <p class="lead-light">We work with a selective roster of premium clients. Revenue-generating, asset-ready, and serious about building something structural.</p>
+      <div style="margin-top:48px;">
         <a href="strategy-session.html" class="btn-gold" style="font-size:1rem;padding:18px 52px;">Apply for Strategy Session</a>
       </div>
-      <p class="cta-note reveal">Selective intake · Premium clients only · Strategy sessions are paid engagements</p>
+      <p class="cta-note">Selective intake · Premium clients only · Strategy sessions are paid engagements</p>
     </div>
   </section>
 
